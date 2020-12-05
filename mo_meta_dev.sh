@@ -1,0 +1,49 @@
+# export CUDA_VISIBLE_DEVICES=5
+
+python -u meta_dev.py \
+    -meta_dev_task "CHEMBL4722" \
+    -data "processed_data/meta-dev/CHEMBL4722" \
+    -save_model experiments/meta_train/model \
+    -data_ratio 1.0 \
+    -seed 42  \
+    -gpu 0 \
+    -gpu_ranks 0 \
+    -meta_iterations 570 \
+    -inner_iterations 50 \
+    -save_checkpoint_epochs 5 \
+    -keep_checkpoint 20 \
+    -report_every 50000 \
+    -param_init 0  \
+    -param_init_glorot \
+    -max_generator_batches 32 \
+    -batch_size 64 \
+    -batch_type sents \
+    -translate_batch_size 64\
+    -normalization tokens \
+    -max_grad_norm 0  \
+    -accum_count 4 \
+    -optim adam \
+    -adam_beta1 0.9 \
+    -adam_beta2 0.998 \
+    -decay_method noam \
+    -warmup_steps 32  \
+    -learning_rate 0.1 \
+    -label_smoothing 0.0 \
+    -layers 4 \
+    -rnn_size 256 \
+    -word_vec_size 256 \
+    -dropout 0.1 \
+    -position_encoding \
+    -share_embeddings \
+    -global_attention general \
+    -global_attention_function softmax \
+    -self_attn_type scaled-dot \
+    -heads 8 \
+    -transformer_ff 2048 \
+    -beam_size 10 \
+    -n_best 10 \
+    -replace_unk \
+    -max_length 200 \
+    -fast \
+    -output meta_dev_pred.txt \
+    -log_file meta_dev.log
